@@ -1,5 +1,5 @@
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile, QDateTime, QTimer
+from PySide2.QtCore import QDateTime, QTimer
 from PyQt5 import QtWidgets
 import PySide2.QtCore as QtCore  # 用于确保windows下运行的窗口和Qt中看到的窗口一致
 from PySide2.QtGui import QIcon
@@ -7,7 +7,7 @@ from mainwindow import Ui_MainWindow
 import Help.helpMain as helpLog
 import Help.updateMain as updateLog
 import Lib.calculate.calculateMain as calculate
-# import Func_class.fit.fit as fit  # 导入用于计算的三个自定义类文件
+import Lib.fit.fit as fit  # 导入用于计算的三个自定义类文件
 # import Func_class.drawpic.drawpictures as drawpic
 # import Func_class.advanceddraw.advanceddraw as adv_draw
 import sys
@@ -30,7 +30,7 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         # 以上代码用于在入口界面动态显示时间
         # 绑定按钮和相应程序
         self.calculate.clicked.connect(self.cal)
-        # self.fit.clicked.connect(self.fit)
+        self.fit.clicked.connect(self.fitMode)
         # self.drawpicture.clicked.connect(self.drawpic)
         # self.advanceddraw.clicked.connect(self.advanced_drawpic)
         self.helpdocu.triggered.connect(self.help)
@@ -249,18 +249,16 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
                                      "border:2px groove gray;border-radius:10px;padding:2px 4px;")
 
 
-    # def fit(self):
-    #     self.fit = fit.fitmode()
-    #     self.fit.ui.show()
-    #     self.fit.ui.setWindowIcon(QIcon('Func_class\\fit\\fitmodeicon.png'))
-    #     if self.tokeepwin.isChecked():
-    #         keep_window = 1
-    #     else:
-    #         keep_window = 0
-    #     if keep_window == 0:
-    #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
-    #     self.fit.setStyleSheet("background-color: rgb(175, 175, 175);\n"
-    #                               "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+    def fitMode(self):
+        self.fitUI = fit.fitmode()
+        self.fitUI.show()
+        # self.fitUI.setWindowIcon(QIcon('Lib\\fit\\fitmodeicon.png'))
+        if self.tokeepwin.isChecked():
+            keep_window = 1
+        else:
+            keep_window = 0
+        if keep_window == 0:
+            self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
 
     # def drawpic(self):
     #     self.drawpic = drawpic.drawpicmode()
