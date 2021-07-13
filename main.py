@@ -5,12 +5,11 @@ import PySide2.QtCore as QtCore  # 用于确保windows下运行的窗口和Qt中
 from PySide2.QtGui import QIcon
 from mainwindow import Ui_MainWindow
 import Help.helpMain as helpLog
-# import Func_class.calculate.calculate as calculate
+import Help.updateMain as updateLog
+import Lib.calculate.calculateMain as calculate
 # import Func_class.fit.fit as fit  # 导入用于计算的三个自定义类文件
 # import Func_class.drawpic.drawpictures as drawpic
 # import Func_class.advanceddraw.advanceddraw as adv_draw
-# import main_help as help_log
-# import main_updatelog as update_log
 import sys
 import time
 
@@ -30,12 +29,12 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         self.time.timeout.connect(self.Timeupdate)
         # 以上代码用于在入口界面动态显示时间
         # 绑定按钮和相应程序
-        # self.calculate.clicked.connect(self.cal)
+        self.calculate.clicked.connect(self.cal)
         # self.fit.clicked.connect(self.fit)
         # self.drawpicture.clicked.connect(self.drawpic)
         # self.advanceddraw.clicked.connect(self.advanced_drawpic)
         self.helpdocu.triggered.connect(self.help)
-        # self.updatedocu.triggered.connect(self.updatelog)
+        self.updatedocu.triggered.connect(self.updatelog)
         # 绑定按钮和相应程序
         self.set_background_image()
 
@@ -44,182 +43,182 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         if int(current_time[5]) == 0 and int(current_time[6]) == 8 and int(current_time[8]) == 2 and int(
                 current_time[9]) == 5:  # 七夕节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/Valen_day.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/Valen_day.png);\n"
+                               "}")
             self.greetings.setStyleSheet("QLabel { \n"  # 根据颜色设置标签的样式
-                                            "    color: rgb(244, 244, 244);\n"
-                                            "}\n"
-                                            )
+                                         "    color: rgb(244, 244, 244);\n"
+                                         "}\n"
+                                         )
             self.timer.setStyleSheet("QLabel { \n"
-                                        "    color: rgb(244, 244, 244);\n"
-                                        "}\n"
-                                        )
+                                     "    color: rgb(244, 244, 244);\n"
+                                     "}\n"
+                                     )
 
         elif int(current_time[5]) == 0 and int(current_time[6]) == 9 and int(current_time[8]) == 1 and int(
                 current_time[9]) == 0:  # 教师节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/teacher_day.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/teacher_day.png);\n"
+                               "}")
             self.greetings.setStyleSheet("QLabel { \n"  # 根据颜色设置标签的样式
-                                            "    color: rgb(244, 244, 244);\n"
-                                            "}\n"
-                                            )
+                                         "    color: rgb(244, 244, 244);\n"
+                                         "}\n"
+                                         )
             self.timer.setStyleSheet("QLabel { \n"
-                                        "    color: rgb(244, 244, 244);\n"
-                                        "}\n"
-                                        )
+                                     "    color: rgb(244, 244, 244);\n"
+                                     "}\n"
+                                     )
         elif int(current_time[5]) == 1 and int(current_time[6]) == 0 and int(current_time[8]) == 0 and int(
                 current_time[9]) == 1:  # 中秋节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/midautumn_fes.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/midautumn_fes.png);\n"
+                               "}")
         elif int(current_time[5]) == 1 and int(current_time[6]) == 0 and int(current_time[8]) == 0 and int(
                 current_time[9]) <= 7:  # 国庆节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/national_day.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/national_day.png);\n"
+                               "}")
             self.greetings.setStyleSheet("QLabel { \n"  # 根据颜色设置标签的样式
-                                            "    color: rgb(255, 6, 43);\n"
-                                            "}\n"
-                                            )
+                                         "    color: rgb(255, 6, 43);\n"
+                                         "}\n"
+                                         )
             self.timer.setStyleSheet("QLabel { \n"
-                                        "    color: rgb(255, 6, 43);\n"
-                                        "}\n"
-                                        )
+                                     "    color: rgb(255, 6, 43);\n"
+                                     "}\n"
+                                     )
         elif int(current_time[5]) == 1 and int(current_time[6]) == 2 and int(current_time[8]) == 2 and int(
                 current_time[9]) == 5:  # 圣诞节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/chrismas_day.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/chrismas_day.png);\n"
+                               "}")
             self.greetings.setStyleSheet("QLabel { \n"  # 根据颜色设置标签的样式
-                                            "    color: rgb(0, 0, 0);\n"
-                                            "}\n"
-                                            )
+                                         "    color: rgb(0, 0, 0);\n"
+                                         "}\n"
+                                         )
             self.timer.setStyleSheet("QLabel { \n"
-                                        "    color: rgb(0, 0, 0);\n"
-                                        "}\n"
-                                        )
+                                     "    color: rgb(0, 0, 0);\n"
+                                     "}\n"
+                                     )
         elif int(current_time[5]) == 0 and int(current_time[6]) == 1 and int(current_time[8]) == 0 and int(
                 current_time[9]) == 1:  # 元旦节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 2 and int(current_time[8]) == 1 and int(
                 current_time[9]) == 1:  # 除夕节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 2 and int(current_time[8]) == 1 and int(
                 current_time[9]) < 4:  # 春节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 2 and int(current_time[8]) == 1 and int(
                 current_time[9]) == 4:  # 情人节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 2 and int(current_time[8]) == 2 and int(
                 current_time[9]) == 6:  # 元宵节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 3 and int(current_time[8]) == 1 and int(
                 current_time[9]) == 2:  # 植树节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 4 and int(current_time[8]) == 0 and int(
                 current_time[9]) <= 5 and int(current_time[9]) >= 2:  # 清明节
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/mwbdpic.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/mwbdpic.png);\n"
+                               "}")
         elif int(current_time[5]) == 0 and int(current_time[6]) == 4 and int(current_time[8]) == 1 and int(
                 current_time[9]) == 7:  # 生日
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/birthday21.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/birthday21.png);\n"
+                               "}")
             self.greetings.setText('21岁生日快乐，' + self.username)
         elif current_time[len(current_time) - 1] == '六' or current_time[len(current_time) - 1] == '日':  # 周末
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/weekend.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/weekend.png);\n"
+                               "}")
             self.greetings.setStyleSheet("QLabel { \n"  # 根据颜色设置标签的样式
-                                            "    color: rgb(0, 0, 0);\n"
-                                            "}\n"
-                                            )
+                                         "    color: rgb(0, 0, 0);\n"
+                                         "}\n"
+                                         )
             self.timer.setStyleSheet("QLabel { \n"
-                                        "    color: rgb(0, 0, 0);\n"
-                                        "}\n"
-                                        )
+                                     "    color: rgb(0, 0, 0);\n"
+                                     "}\n"
+                                     )
         else:  # 平时的背景图
             self.setStyleSheet("QPushButton { \n"
-                                  "    color: blue ;\n"
-                                  "    font-size:28px;\n"
-                                  "}\n"
-                                  "#MainWindow {\n"
-                                  "    border-image: url(picture/normal_day.png);\n"
-                                  "}")
+                               "    color: blue ;\n"
+                               "    font-size:28px;\n"
+                               "}\n"
+                               "#MainWindow {\n"
+                               "    border-image: url(picture/normal_day.png);\n"
+                               "}")
 
-    # def updatelog(self):
-    #     self.updatelog = update_log.updatelog()
-    #     self.updatelog.ui.show()
+    def updatelog(self):
+        self.updatelog = updateLog.MainWindow()
+        self.updatelog.show()
 
     def help(self):
         self.helpui = helpLog.MainWindow()
@@ -236,18 +235,19 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 self.greetings.setText('夜深了，' + self.username)
 
-    # def cal(self):
-    #     self.calculation = calculate.calculatemode()
-    #     self.calculation.ui.show()
-    #     self.calculation.ui.setWindowIcon(QIcon('Func_class\\calculate\\callogo.png'))
-    #     if self.tokeepwin.isChecked():
-    #         keep_window = 1
-    #     else:
-    #         keep_window = 0
-    #     if keep_window == 0:
-    #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
-    #     self.calculate.setStyleSheet("background-color: rgb(175, 175, 175);\n"
-    #                                     "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+    def cal(self):
+        self.calculation = calculate.MainWindow()
+        # self.calculation.setWindowIcon(QIcon('Lib\\calculate\\callogo.png'))
+        self.calculation.show()
+        if self.tokeepwin.isChecked():
+            keep_window = 1
+        else:
+            keep_window = 0
+        if keep_window == 0:
+            self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
+        self.calculate.setStyleSheet("background-color: rgb(175, 175, 175);\n"
+                                     "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+
 
     # def fit(self):
     #     self.fit = fit.fitmode()
@@ -261,7 +261,7 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
     #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
     #     self.fit.setStyleSheet("background-color: rgb(175, 175, 175);\n"
     #                               "border:2px groove gray;border-radius:10px;padding:2px 4px;")
-    #
+
     # def drawpic(self):
     #     self.drawpic = drawpic.drawpicmode()
     #     self.drawpic.ui.show()

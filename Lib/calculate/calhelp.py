@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'updatelog.ui'
+# Form implementation generated from reading ui file 'calhelp.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.0
 #
@@ -14,25 +14,23 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(894, 695)
+        MainWindow.resize(466, 513)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.updatelogdisplay = QtWidgets.QTextBrowser(self.centralwidget)
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.helpdisplay = QtWidgets.QTextBrowser(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
-        self.updatelogdisplay.setFont(font)
-        self.updatelogdisplay.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.updatelogdisplay.setStyleSheet("background-color: rgb(240, 255, 251);")
-        self.updatelogdisplay.setObjectName("updatelogdisplay")
-        self.verticalLayout.addWidget(self.updatelogdisplay)
+        self.helpdisplay.setFont(font)
+        self.helpdisplay.setObjectName("helpdisplay")
+        self.horizontalLayout.addWidget(self.helpdisplay)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 894, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 466, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -44,4 +42,4 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "程序入口更新日志"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "说明文档"))
