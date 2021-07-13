@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets
+from PySide2.QtWidgets import QMainWindow, QFileDialog
 from Lib.fit.fitmodeMainUI import Ui_MainWindow
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,8 +22,8 @@ class fitmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.hisdownbtn.clicked.connect(self.history_down)
         self.fitbtn.clicked.connect(self.fit)
         self.clearbtn.clicked.connect(self.clear)
-        # self.txtfile.triggered.connect(self.txtfile)
-        # self.excelfile.triggered.connect(self.excelfile)
+        self.txtfile.triggered.connect(self.txtfileHandle)
+        self.excelfile.triggered.connect(self.excelfileHandle)
         # self.helpdocu.triggered.connect(self.help)
         # self.updatedocu.triggered.connect(self.updatelog)
         # 将按钮和相应的函数联系起来
@@ -217,78 +218,78 @@ class fitmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ui.hisdownbtn.setStyleSheet("background-color: rgb(241, 188, 255);\n"
                                          "border:2px groove gray;border-radius:10px;padding:2px 4px;")
 
-    # def txtfile(self):  # 对txt文件进行操作,将其内容添加到文本框中
-    #     # 以下代码可以打开文本对话框并获取文件的绝对路径
-    #     selectwindow = QMainWindow()  # 建立一个新的窗口
-    #     Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
-    #     FileDialog = Filewindow.getOpenFileName(selectwindow, "选择文件")  # 设置窗口名称
-    #     selectwindow.show()  # 显示该文本框
-    #     # 以上代码可以打开文本对话框并获取文件的绝对路径
-    #     filepath = FileDialog[0]  # 获取文本文件的绝对位置
-    #     textfile = open(filepath, "r")
-    #     xdisplay = ''
-    #     ydisplay = ''
-    #     lines = textfile.readline()
-    #     while lines:  # 读取文本文件的内容
-    #         if lines[len(lines) - 1] == '\n':
-    #             lines = lines[:-1]  # 去掉换行符
-    #         line = lines.split(" ")
-    #         xdisplay = xdisplay + line[0] + ' '
-    #         ydisplay = ydisplay + line[1] + ' '
-    #         lines = textfile.readline()
-    #     xdisplay = xdisplay[:-1]
-    #     ydisplay = ydisplay[:-1]
-    #     self.ui.xinput.setText(xdisplay)
-    #     self.ui.yinput.setText(ydisplay)
+    def txtfileHandle(self):  # 对txt文件进行操作,将其内容添加到文本框中
+        # 以下代码可以打开文本对话框并获取文件的绝对路径
+        selectwindow = QMainWindow()  # 建立一个新的窗口
+        Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
+        FileDialog = Filewindow.getOpenFileName(selectwindow, "选择文件")  # 设置窗口名称
+        selectwindow.show()  # 显示该文本框
+        # 以上代码可以打开文本对话框并获取文件的绝对路径
+        filepath = FileDialog[0]  # 获取文本文件的绝对位置
+        textfile = open(filepath, "r")
+        xdisplay = ''
+        ydisplay = ''
+        lines = textfile.readline()
+        while lines:  # 读取文本文件的内容
+            if lines[len(lines) - 1] == '\n':
+                lines = lines[:-1]  # 去掉换行符
+            line = lines.split(" ")
+            xdisplay = xdisplay + line[0] + ' '
+            ydisplay = ydisplay + line[1] + ' '
+            lines = textfile.readline()
+        xdisplay = xdisplay[:-1]
+        ydisplay = ydisplay[:-1]
+        self.xinput.setText(xdisplay)
+        self.yinput.setText(ydisplay)
 
-    # def excelfile(self):  # 读取excel文件并进行相关计算
-    #     # 以下代码可以打开文本对话框并获取文件的绝对路径
-    #     selectwindow = QMainWindow()  # 建立一个新的窗口
-    #     Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
-    #     FileDialog = Filewindow.getOpenFileName(selectwindow, "选择文件")  # 设置窗口名称
-    #     print(FileDialog[0])  # FileDialog[0]就是所选择的文件的绝对路径
-    #     selectwindow.show()  # 显示该文本框
-    #     # 以上代码可以打开文本对话框并获取文件的绝对路径
-    #     fielpath = FileDialog[0]  # 获取文本文件的绝对位置
-    #     efile = xlrd.open_workbook(fielpath)
-    #     sheet = efile.sheet_by_name('Sheet1')  # 打开sheet1
-    #     rows_num = sheet.nrows  # 获取行数即可用来作为循环条件
-    #     columns_num = sheet.ncols  # 获取列数来作为循环条件
-    #     x_display = ''
-    #     y_display = ''
-    #     x_line = self.ui.excelxinput.text()  # 从UI界面读取x要读取的excel文件的列数
-    #     y_line = self.ui.excelyinput.text()  # 从UI界面读取y要读取的excel文件的列数
-    #     read_method = self.ui.methodinput.text()  # 横竖读法读取,1为横，2为竖
-    #     ######################以下用于设置x,y,readmethod的缺省值#####################
-    #     if x_line == '':  # 设置缺省值
-    #         x_line = 0
-    #     else:
-    #         x_line = int(x_line)
-    #     if y_line == '':
-    #         y_line = 1
-    #     else:
-    #         y_line = int(y_line)
-    #     if read_method == '':
-    #         read_method = 2
-    #     else:
-    #         read_method = int(read_method)
-    #     ######################以下用于读取excel中的数据#####################
-    #     if read_method == 1:
-    #         for i in range(0, columns_num):
-    #             x_display = x_display + str(sheet.cell(x_line, i).value) + ' '
-    #             y_display = y_display + str(sheet.cell(y_line, i).value) + ' '
-    #     elif read_method == 2:
-    #         for i in range(0, rows_num):
-    #             x_display = x_display + str(sheet.cell(i, x_line).value) + ' '
-    #             y_display = y_display + str(sheet.cell(i, y_line).value) + ' '
-    #     x_display = x_display[:-1]
-    #     if x_display[0] == ' ':  # 避免出现开头为0的情况
-    #         x_display = x_display[1:]
-    #     y_display = y_display[:-1]
-    #     if y_display[0] == ' ':  # 避免出现开头为0的情况
-    #         y_display = y_display[1:]
-    #     self.ui.xinput.setText(x_display)
-    #     self.ui.yinput.setText(y_display)
+    def excelfileHandle(self):  # 读取excel文件并进行相关计算
+        # 以下代码可以打开文本对话框并获取文件的绝对路径
+        selectwindow = QMainWindow()  # 建立一个新的窗口
+        Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
+        FileDialog = Filewindow.getOpenFileName(selectwindow, "选择文件")  # 设置窗口名称
+        print(FileDialog[0])  # FileDialog[0]就是所选择的文件的绝对路径
+        selectwindow.show()  # 显示该文本框
+        # 以上代码可以打开文本对话框并获取文件的绝对路径
+        fielpath = FileDialog[0]  # 获取文本文件的绝对位置
+        efile = xlrd.open_workbook(fielpath)
+        sheet = efile.sheet_by_name('Sheet1')  # 打开sheet1
+        rows_num = sheet.nrows  # 获取行数即可用来作为循环条件
+        columns_num = sheet.ncols  # 获取列数来作为循环条件
+        x_display = ''
+        y_display = ''
+        x_line = self.excelxinput.text()  # 从UI界面读取x要读取的excel文件的列数
+        y_line = self.excelyinput.text()  # 从UI界面读取y要读取的excel文件的列数
+        read_method = self.methodinput.text()  # 横竖读法读取,1为横，2为竖
+        ######################以下用于设置x,y,readmethod的缺省值#####################
+        if x_line == '':  # 设置缺省值
+            x_line = 0
+        else:
+            x_line = int(x_line)
+        if y_line == '':
+            y_line = 1
+        else:
+            y_line = int(y_line)
+        if read_method == '':
+            read_method = 2
+        else:
+            read_method = int(read_method)
+        ######################以下用于读取excel中的数据#####################
+        if read_method == 1:
+            for i in range(0, columns_num):
+                x_display = x_display + str(sheet.cell(x_line, i).value) + ' '
+                y_display = y_display + str(sheet.cell(y_line, i).value) + ' '
+        elif read_method == 2:
+            for i in range(0, rows_num):
+                x_display = x_display + str(sheet.cell(i, x_line).value) + ' '
+                y_display = y_display + str(sheet.cell(i, y_line).value) + ' '
+        x_display = x_display[:-1]
+        if x_display[0] == ' ':  # 避免出现开头为0的情况
+            x_display = x_display[1:]
+        y_display = y_display[:-1]
+        if y_display[0] == ' ':  # 避免出现开头为0的情况
+            y_display = y_display[1:]
+        self.xinput.setText(x_display)
+        self.yinput.setText(y_display)
 
 # QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
 # app = QApplication([])
