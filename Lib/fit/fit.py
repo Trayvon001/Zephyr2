@@ -4,8 +4,8 @@ from Lib.fit.fitmodeMainUI import Ui_MainWindow
 import numpy as np
 import matplotlib.pyplot as plt
 import xlrd
-# import Lib.fit.fithelp as help
-# import Lib.fit.fitupdatelog as updatelog
+import Lib.fit.fithelp as help
+import Lib.fit.fitupdatelog as updatelog
 import time
 
 
@@ -24,17 +24,17 @@ class fitmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.clearbtn.clicked.connect(self.clear)
         self.txtfile.triggered.connect(self.txtfileHandle)
         self.excelfile.triggered.connect(self.excelfileHandle)
-        # self.helpdocu.triggered.connect(self.help)
-        # self.updatedocu.triggered.connect(self.updatelog)
+        self.helpdocu.triggered.connect(self.help)
+        self.updatedocu.triggered.connect(self.updatelog)
         # 将按钮和相应的函数联系起来
 
-    # def updatelog(self):
-    #     self.updatelog = updatelog.updatelog()
-    #     self.updatelog.ui.show()
-    #
-    # def help(self):
-    #     self.help = help.help()
-    #     self.help.ui.show()
+    def updatelog(self):
+        self.updatelog = updatelog.MainWindow()
+        self.updatelog.show()
+
+    def help(self):
+        self.help = help.MainWindow()
+        self.help.show()
 
     def clear(self):  # 清楚所有内容
         self.ui.clearbtn.setStyleSheet("border:2px groove gray;border-radius:10px;padding:2px 4px;\n"
