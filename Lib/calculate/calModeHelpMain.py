@@ -1,17 +1,11 @@
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile
+from PyQt5 import QtWidgets
+from Lib.calculate.calModeHelpUI import Ui_MainWindow
 
 
-class help:
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        qfile_status = QFile(
-            "Func_class\calculate\calhelp.ui")  # 要在主目录中运行时加上Func_class\calculate\calmodewindow.ui
-        qfile_status.open(QFile.ReadOnly)
-        qfile_status.close()
-        # 从UI定义中动态创建一个相应的窗口对象
-        # 注意：这里面的空间对象也成为窗口对象的属性了
-        # 比如self.ui.buttom, self.ui.textEdit
-        self.ui = QUiLoader().load(qfile_status)
+        super(MainWindow, self).__init__()
+        self.setupUi(self)
         self.display()
 
     def display(self):
@@ -21,4 +15,5 @@ class help:
         string = string + '历史记录和清零功能的使用\n'
         string = string + '点击历史记录会自动在所有位置返回上次的结果，若没有更多的历史记录则会以holdtxt提示历史纪录为空。\n'
         string = string + '归零功能会清空当前所有的输入，但不会清空历史记录。'
-        self.ui.helpdisplay.setText(string)
+        self.helpdisplay.setText(string)
+

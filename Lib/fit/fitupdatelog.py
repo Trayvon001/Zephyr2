@@ -5,7 +5,7 @@ from PySide2.QtCore import QFile
 class updatelog:
     def __init__(self):
         qfile_status = QFile(
-            "Func_class\\fit\\fitUpdateLogUI.ui")  # 要在主目录中运行时加上Func_class\calculate\calmodewindow.ui
+            "Func_class\\fit\\fitUpdateLogUI.ui")  # 要在主目录中运行时加上Func_class\calculate\calModeUI.ui
         qfile_status.open(QFile.ReadOnly)
         qfile_status.close()
         # 从UI定义中动态创建一个相应的窗口对象

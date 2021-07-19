@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Zephyr--Desiged by 齐承文 and 齐承武--Version 4.1.0--Last Update：2020-11-20</string>
+   <string>Zephyr2--Desiged by 齐承文--Version 1.0.0--Last Update：2021-7-13</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton { 

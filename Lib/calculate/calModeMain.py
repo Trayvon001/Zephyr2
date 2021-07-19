@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets
 import numpy
-from Lib.calculate.calmodewindow import Ui_MainWindow
-import Lib.calculate.calmodehelpMain as help
-import Lib.calculate.calupdatelog as updatelog
+from Lib.calculate.calModeUI import Ui_MainWindow
+import Lib.calculate.calModeHelpMain as help
+import Lib.calculate.calModeLogMain as updatelog
 import time
 
 
@@ -27,8 +27,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.midnumbtn.clicked.connect(self.midnum)
         self.historybtn.clicked.connect(self.his)
         self.errorbtn.clicked.connect(self.ess)  # 误差计算函数
-        # self.helpdocu.triggered.connect(self.help)
-        # self.updatedocu.triggered.connect(self.updatelog)
+        self.helpdocu.triggered.connect(self.help)
+        self.updatedocu.triggered.connect(self.updatelog)
         self.magnifybtn.clicked.connect(self.magnify)
         self.frequencybtn.clicked.connect(self.frenquency_func)
         # 将按钮和相应的函数联系起来
@@ -105,15 +105,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.h += 1
         self.history.append([data, hs])  # 存储该记录方便之后查找
 
-    # def updatelog(self):
-    #     self.updatelog = updatelog.updatelog()
-    #     self.updatelog.ui.show()
-    #
-    # def help(self):
-    #     self.help = help.help()
-    #     self.help.ui.show()
-    #     # self.calhelp.ui.setWindowIcon(QIcon('Func_class\\calculate\\callogo.png'))
-    #     # self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
+    def updatelog(self):
+        self.updatelogUI = updatelog.MainWindow()
+        self.updatelogUI.show()
+
+    def help(self):
+        self.helpUI = help.MainWindow()
+        self.helpUI.show()
+        # self.calModeHelpUI.ui.setWindowIcon(QIcon('Func_class\\calculate\\callogo.png'))
+        # self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
 
     def clear(self):  # 清除所有内容
         self.clearbtn.setStyleSheet("border:2px groove gray;border-radius:10px;padding:2px 4px;\n"

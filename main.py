@@ -6,7 +6,7 @@ from PySide2.QtGui import QIcon
 from mainwindow import Ui_MainWindow
 import Help.helpMain as helpLog
 import Help.updateMain as updateLog
-import Lib.calculate.calculateMain as calculate
+import Lib.calculate.calModeMain as calculate
 import Lib.fit.fit as fit  # 导入用于计算的三个自定义类文件
 # import Func_class.drawpic.drawpictures as drawpic
 # import Func_class.advanceddraw.advanceddraw as adv_draw
@@ -285,6 +285,18 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
     #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
     #     self.advanceddraw.setStyleSheet("background-color: rgb(175, 175, 175);\n"
     #                                        "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)  # 使得窗口比例和用Qt设计时完全一致
