@@ -8,7 +8,7 @@ import Help.helpMain as helpLog
 import Help.updateMain as updateLog
 import Lib.calculate.calModeMain as calculate
 import Lib.fit.fit as fit  # 导入用于计算的三个自定义类文件
-# import Func_class.drawpic.drawpictures as drawpic
+import Lib.drawpic.drawpicMain as drawpic
 # import Func_class.advanceddraw.advanceddraw as adv_draw
 import sys
 import time
@@ -31,7 +31,7 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         # 绑定按钮和相应程序
         self.calculate.clicked.connect(self.cal)
         self.fit.clicked.connect(self.fitMode)
-        # self.drawpicture.clicked.connect(self.drawpic)
+        self.drawpicture.clicked.connect(self.drawpic)
         # self.advanceddraw.clicked.connect(self.advanced_drawpic)
         self.helpdocu.triggered.connect(self.help)
         self.updatedocu.triggered.connect(self.updatelog)
@@ -260,18 +260,16 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         if keep_window == 0:
             self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
 
-    # def drawpic(self):
-    #     self.drawpic = drawpic.drawpicmode()
-    #     self.drawpic.ui.show()
-    #     self.drawpic.ui.setWindowIcon(QIcon('Func_class\\drawpic\\drawicon.png'))
-    #     if self.tokeepwin.isChecked():
-    #         keep_window = 1
-    #     else:
-    #         keep_window = 0
-    #     if keep_window == 0:
-    #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
-    #     self.drawpicture.setStyleSheet("background-color: rgb(175, 175, 175);\n"
-    #                                       "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+    def drawpic(self):
+        self.drawpicUI = drawpic.drawpicmode()
+        self.drawpicUI.show()
+        # self.drawpicMainUI.ui.setWindowIcon(QIcon('Func_class\\drawpic\\drawicon.png'))
+        if self.tokeepwin.isChecked():
+            keep_window = 1
+        else:
+            keep_window = 0
+        if keep_window == 0:
+            self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
     #
     # def advanced_drawpic(self):
     #     self.advdraw = adv_draw.advdrawpic()
