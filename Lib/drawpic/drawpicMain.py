@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
 import xlrd
 from Lib.drawpic.drawpicMainUI import Ui_MainWindow
-# import Lib.drawpic.drawpichelp as help
-# import Lib.drawpic.drawpicupdatelog as updatelog
+import Lib.drawpic.drawpichelp as help
+import Lib.drawpic.drawpicupdatelog as updatelog
 import time
 from PIL import Image
 
@@ -33,8 +33,8 @@ class drawpicmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.drawbtn.clicked.connect(self.draw)
         self.txtfile.triggered.connect(self.txtfileHandle)
         self.excelfile.triggered.connect(self.excelfileHandle)
-        # self.helpdocu.triggered.connect(self.help)
-        # self.updatedocu.triggered.connect(self.updatelog)
+        self.helpdocu.triggered.connect(self.help)
+        self.updatedocu.triggered.connect(self.updatelog)
         self.d10.triggered.connect(self.rotation_state_pure10)
         self.d20.triggered.connect(self.rotation_state_pure20)
         self.d30.triggered.connect(self.rotation_state_pure30)
@@ -44,11 +44,10 @@ class drawpicmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.d75.triggered.connect(self.rotation_state_pure75)
         self.d80.triggered.connect(self.rotation_state_pure80)
         self.d90.triggered.connect(self.rotation_state_pure90)
-        # self.export_image.triggered.connect(self.export_image)
-        # self.ui.updatedocu.triggered.connect(self.updatedocu)
+        self.export_image.triggered.connect(self.export_imageHandle)
         # 将按钮和相应的函数联系起来
 
-    def export_image(self):
+    def export_imageHandle(self):
         imgs = Image.open('temp_image2.png')
         imgs.save('result\\result.png')
 
@@ -152,13 +151,13 @@ class drawpicmode(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ui.d80.setChecked(False)
         #  the code above is there to decide the value of rotation_num
 
-    # def updatelog(self):
-    #     self.updatelog = updatelog.updatelog()
-    #     self.updatelog.ui.show()
-    #
-    # def help(self):
-    #     self.help = help.help()
-    #     self.help.ui.show()
+    def updatelog(self):
+        self.updatelog = updatelog.MainWindow()
+        self.updatelog.show()
+
+    def help(self):
+        self.help = help.MainWindow()
+        self.help.show()
 
     def clear(self):  # 所有参数都要清零
         self.ui.clearbtn.setStyleSheet("border:2px groove gray;border-radius:10px;padding:2px 4px;\n"
@@ -369,8 +368,10 @@ class drawpicmode(QtWidgets.QMainWindow, Ui_MainWindow):
         FileDialog = Filewindow.getOpenFileName(selectwindow, "选择文件")  # 设置窗口名称
         selectwindow.show()  # 显示该文本框
         # 以上代码可以打开文本对话框并获取文件的绝对路径
-        filepath = FileDialog[0]  # 获取文本文件的绝对位置
-        textfile = open(filepath, "r")
+        filePath = FileDialog[0]  # 获取文本文件的绝对位置
+        if filePath == "":  # 防止未选择文件时出现闪退现象
+            return
+        textfile = open(filePath, "r")
         xdisplay = ''
         ydisplay = ''
         lines = textfile.readline()
@@ -394,8 +395,10 @@ class drawpicmode(QtWidgets.QMainWindow, Ui_MainWindow):
         print(FileDialog[0])  # FileDialog[0]就是所选择的文件的绝对路径
         selectwindow.show()  # 显示该文本框
         # 以上代码可以打开文本对话框并获取文件的绝对路径
-        fielpath = FileDialog[0]  # 获取文本文件的绝对位置
-        efile = xlrd.open_workbook(fielpath)
+        filePath = FileDialog[0]  # 获取文本文件的绝对位置
+        if filePath == "":
+            return
+        efile = xlrd.open_workbook(filePath)
         sheet = efile.sheet_by_name('Sheet1')  # 打开sheet1
         rows_num = sheet.nrows  # 获取行数即可用来作为循环条件
         columns_num = sheet.ncols  # 获取列数来作为循环条件
