@@ -281,19 +281,6 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         if keep_window == 0:
             self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)  # 使得窗口比例和用Qt设计时完全一致
 
 if __name__ == '__main__':
