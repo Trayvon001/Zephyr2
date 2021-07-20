@@ -1,4 +1,3 @@
-from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QDateTime, QTimer
 from PyQt5 import QtWidgets
 import PySide2.QtCore as QtCore  # 用于确保windows下运行的窗口和Qt中看到的窗口一致
@@ -9,7 +8,7 @@ import Help.updateMain as updateLog
 import Lib.calculate.calModeMain as calculate
 import Lib.fit.fit as fit  # 导入用于计算的三个自定义类文件
 import Lib.drawpic.drawpicMain as drawpic
-# import Func_class.advanceddraw.advanceddraw as adv_draw
+import Lib.advanceddraw.advanceddrawMain as adv_draw
 import sys
 import time
 
@@ -32,7 +31,7 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         self.calculate.clicked.connect(self.cal)
         self.fit.clicked.connect(self.fitMode)
         self.drawpicture.clicked.connect(self.drawpic)
-        # self.advanceddraw.clicked.connect(self.advanced_drawpic)
+        self.advanceddraw.clicked.connect(self.advanced_drawpic)
         self.helpdocu.triggered.connect(self.help)
         self.updatedocu.triggered.connect(self.updatelog)
         # 绑定按钮和相应程序
@@ -271,18 +270,16 @@ class Stats(QtWidgets.QMainWindow, Ui_MainWindow):
         if keep_window == 0:
             self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
     #
-    # def advanced_drawpic(self):
-    #     self.advdraw = adv_draw.advdrawpic()
-    #     self.advdraw.ui.show()
-    #     self.advdraw.ui.setWindowIcon(QIcon('Func_class\\advanceddraw\\advanceddrawicon.png'))
-    #     if self.tokeepwin.isChecked():
-    #         keep_window = 1
-    #     else:
-    #         keep_window = 0
-    #     if keep_window == 0:
-    #         self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
-    #     self.advanceddraw.setStyleSheet("background-color: rgb(175, 175, 175);\n"
-    #                                        "border:2px groove gray;border-radius:10px;padding:2px 4px;")
+    def advanced_drawpic(self):
+        self.advdrawUI = adv_draw.advdrawpic()
+        self.advdrawUI.show()
+        # self.advdraw.ui.setWindowIcon(QIcon('Func_class\\advanceddraw\\advanceddrawicon.png'))
+        if self.tokeepwin.isChecked():
+            keep_window = 1
+        else:
+            keep_window = 0
+        if keep_window == 0:
+            self.close()  # 加上这段代码可以自动关闭之前的窗口，也可以选择不关闭之前的窗口
 
 
 

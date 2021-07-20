@@ -1,19 +1,19 @@
 from PySide2 import QtGui
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtCore import QFile
 from PySide2.QtWidgets import QFileDialog, QMainWindow
+from PyQt5 import QtWidgets
 import numpy as np
 import matplotlib.pyplot as plt
 import xlrd
-import Func_class.drawpic.drawpichelp as help
-import Func_class.drawpic.drawpicupdatelog as updatelog
+import Lib.advanceddraw.advancedrawhelp as help
+import Lib.drawpic.drawpicupdatelog as updatelog
+from Lib.advanceddraw.advanceddrawMainUI import Ui_MainWindow
 import time
 from PIL import Image
 from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d import Axes3D
 
 
-class advdrawpic:
+class advdrawpic(QtWidgets.QMainWindow, Ui_MainWindow):
     history = []
     h = -1
     n = 1
@@ -24,49 +24,42 @@ class advdrawpic:
     image_num = 1
 
     def __init__(self):
-        qfile_status = QFile(
-            "Func_class\\advanceddraw\\advanceddrawwin.ui")  # 要在主目录中运行时加上Func_class\calculate\calmodewindow.ui
-        qfile_status.open(QFile.ReadOnly)
-        qfile_status.close()
-        # 从UI定义中动态创建一个相应的窗口对象
-        # 注意：这里面的空间对象也成为窗口对象的属性了
-        # 比如self.ui.buttom, self.ui.textEdit
-        self.ui = QUiLoader().load(qfile_status)
+        super(advdrawpic, self).__init__()
+        self.setupUi(self)
         # 将按钮和相应的函数联系起来
-        self.ui.clearbtn.clicked.connect(self.clear)
-        self.ui.hisupbtn.clicked.connect(self.history_up)
-        self.ui.hisdownbtn.clicked.connect(self.history_down)
-        self.ui.drawbtn.clicked.connect(self.draw)
-        self.ui.txtfile.triggered.connect(self.txtfile)
-        self.ui.excelfile.triggered.connect(self.excelfile)
-        self.ui.helpdocu.triggered.connect(self.help)
-        self.ui.updatedocu.triggered.connect(self.updatelog)
-        # 用于限制旋转这个子菜单下只能有一个被打勾 #
-        self.ui.d10.triggered.connect(self.rotation_state_pure10)
-        self.ui.d20.triggered.connect(self.rotation_state_pure20)
-        self.ui.d30.triggered.connect(self.rotation_state_pure30)
-        self.ui.d45.triggered.connect(self.rotation_state_pure45)
-        self.ui.d50.triggered.connect(self.rotation_state_pure50)
-        self.ui.d60.triggered.connect(self.rotation_state_pure60)
-        self.ui.d75.triggered.connect(self.rotation_state_pure75)
-        self.ui.d80.triggered.connect(self.rotation_state_pure80)
-        self.ui.d90.triggered.connect(self.rotation_state_pure90)
+        self.clearbtn.clicked.connect(self.clear)
+        self.hisupbtn.clicked.connect(self.history_up)
+        self.hisdownbtn.clicked.connect(self.history_down)
+        self.drawbtn.clicked.connect(self.draw)
+        self.txtfile.triggered.connect(self.txtfileHandle)
+        self.excelfile.triggered.connect(self.excelfileHandle)
+        self.helpdocu.triggered.connect(self.help)
+        self.updatedocu.triggered.connect(self.updatelog)
+        # 用于限制这个子菜单下只能有一个被打勾 #
+        self.d10.triggered.connect(self.rotation_state_pure10)
+        self.d20.triggered.connect(self.rotation_state_pure20)
+        self.d30.triggered.connect(self.rotation_state_pure30)
+        self.d45.triggered.connect(self.rotation_state_pure45)
+        self.d50.triggered.connect(self.rotation_state_pure50)
+        self.d60.triggered.connect(self.rotation_state_pure60)
+        self.d75.triggered.connect(self.rotation_state_pure75)
+        self.d80.triggered.connect(self.rotation_state_pure80)
+        self.d90.triggered.connect(self.rotation_state_pure90)
         # 用于限制旋转这个子菜单下只能有一个被打勾 #
         # 用于限制图片数量这个子菜单下只能有一个被打勾 #
-        self.ui.num12.triggered.connect(self.num_pure12)
-        self.ui.num13.triggered.connect(self.num_pure13)
-        self.ui.num21.triggered.connect(self.num_pure21)
-        self.ui.num22.triggered.connect(self.num_pure22)
-        self.ui.num23.triggered.connect(self.num_pure23)
-        self.ui.num31.triggered.connect(self.num_pure31)
-        self.ui.num32.triggered.connect(self.num_pure32)
-        self.ui.num33.triggered.connect(self.num_pure33)
+        self.num12.triggered.connect(self.num_pure12)
+        self.num13.triggered.connect(self.num_pure13)
+        self.num21.triggered.connect(self.num_pure21)
+        self.num22.triggered.connect(self.num_pure22)
+        self.num23.triggered.connect(self.num_pure23)
+        self.num31.triggered.connect(self.num_pure31)
+        self.num32.triggered.connect(self.num_pure32)
+        self.num33.triggered.connect(self.num_pure33)
         # 用于限制图片数量这个子菜单下只能有一个被打勾 #
-        self.ui.export_image.triggered.connect(self.export_image)
-        # self.ui.updatedocu.triggered.connect(self.updatedocu)
+        self.export_image.triggered.connect(self.export_imageHandle)
         # 将按钮和相应的函数联系起来
 
-    def export_image(self):
+    def export_imageHandle(self):
         imgs = Image.open('temp_image2.png')
         imgs.save('result\\result.png')
 
@@ -252,12 +245,12 @@ class advdrawpic:
         #  the code above is there to decide the value of rotation_num
 
     def updatelog(self):
-        self.updatelog = updatelog.updatelog()
-        self.updatelog.ui.show()
+        self.updatelog = updatelog.MainWindow()
+        self.updatelog.show()
 
     def help(self):
-        self.help = help.help()
-        self.help.ui.show()
+        self.help = help.MainWindow()
+        self.help.show()
 
     def clear(self):  # 所有参数都要清零
         self.ui.clearbtn.setStyleSheet("border:2px groove gray;border-radius:10px;padding:2px 4px;\n"
@@ -533,7 +526,7 @@ class advdrawpic:
         self.ui.hisdownbtn.setStyleSheet("background-color: rgb(221, 226, 255);\n"
                                          "border:2px groove gray;border-radius:10px;padding:2px 4px;")
 
-    def txtfile(self):  # 对txt文件进行操作,将其内容添加到文本框中
+    def txtfileHandle(self):  # 对txt文件进行操作,将其内容添加到文本框中
         # 以下代码可以打开文本对话框并获取文件的绝对路径
         selectwindow = QMainWindow()  # 建立一个新的窗口
         Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
@@ -557,7 +550,7 @@ class advdrawpic:
         self.ui.xinput.setText(xdisplay)
         self.ui.yinput.setText(ydisplay)
 
-    def excelfile(self):  # 读取excel文件并进行相关计算
+    def excelfileHandle(self):  # 读取excel文件并进行相关计算
         # 以下代码可以打开文本对话框并获取文件的绝对路径
         selectwindow = QMainWindow()  # 建立一个新的窗口
         Filewindow = QFileDialog(selectwindow)  # 设置成打开文件的窗口
